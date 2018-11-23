@@ -68,6 +68,8 @@ export default {
         _self.$cookies.set('n', data['data'].n)
         _self.$cookies.set('p', data['data'].p)
         _self.$cookies.set('t', data['data'].t)
+        // 应该先刷新页面，然后跳转，要不然title不能及时更新
+        location.reload()
         _self.$router.push({ path: '/regist' })
       })
     }

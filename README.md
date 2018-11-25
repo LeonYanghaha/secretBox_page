@@ -1,11 +1,11 @@
 # secretbox_page
 
 > seccretbox_page 
-   密码管理器的页面部分，基于Vue做的
-   开发版本：
-       OS：mac
-       node :6.0.0
-       vue:2.5.2
+>  密码管理器的页面部分，基于Vue做的
+>  开发版本：
+>      OS：mac
+>      node :6.0.0
+>      vue:2.5.2
 
 ## Build Setup
 

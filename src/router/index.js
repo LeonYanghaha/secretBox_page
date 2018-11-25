@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
+import Index from '@/components/Index'
 import Regist from '@/components/Regist'
 import About from '@/components/About'
 
@@ -14,7 +14,7 @@ export default new Router({
         title: '首页'
       },
       name: 'Index',
-      component: Login
+      component: Index
     },
     {
       path: '/regist',

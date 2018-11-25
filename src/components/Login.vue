@@ -68,9 +68,12 @@ export default {
         _self.$cookies.set('n', data['data'].n)
         _self.$cookies.set('p', data['data'].p)
         _self.$cookies.set('t', data['data'].t)
+
+        // 给cookie 设置标记
+        _self.$cookies.set('isLogin', true)
         // 应该先刷新页面，然后跳转，要不然title不能及时更新
         location.reload()
-        _self.$router.push({ path: '/regist' })
+        _self.$router.push({ path: '/' })
       })
     }
   },
@@ -94,23 +97,23 @@ export default {
 </script>
 
 <style scoped>
-.login_main{
-  /*border: 2px solid green;*/
-  width: 20%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 10%;
-}
-.login_item{
-}
-.login_item_info {
-  width: 99%;
-  display: inline-block;
-  text-align: center;
-}
-.login_item_btn{
-  width: 99%;
-  display: inline-block;
-  text-align: center;
-}
+  .login_main{
+    /*border: 2px solid green;*/
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10%;
+  }
+  .login_item{
+  }
+  .login_item_info {
+    width: 99%;
+    display: inline-block;
+    text-align: center;
+  }
+  .login_item_btn{
+    width: 99%;
+    display: inline-block;
+    text-align: center;
+  }
 </style>

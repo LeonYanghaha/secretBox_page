@@ -20,7 +20,8 @@
         <router-link to="/about">关于</router-link>
       </el-tag>
       <el-tag>
-        <router-link to="/logout">退出登录</router-link>
+        <!--<router-link to="/logout" @click="logout">退出登录</router-link>-->
+        <span @click="logout">退出登录</span>
       </el-tag>
     </div>
   </div>
@@ -35,6 +36,15 @@ export default {
     }
   },
   methods: {
+    logout () {
+      this.$cookies.remove('d')
+      this.$cookies.remove('n')
+      this.$cookies.remove('p')
+      this.$cookies.remove('t')
+      // 还需要清除cookie的标记
+      this.$cookies.remove('isLogin')
+      location.reload()
+    }
   },
   mounted () {
   }

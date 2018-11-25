@@ -32,13 +32,17 @@ export default {
     }
     let nowTime = new Date().getTime()
     let loginTime = new Date(d).getTime()
+    // token 过期的情况
     if (nowTime - loginTime < 0 || nowTime - loginTime >= 1000 * 60 * 10) {
       _self.isLogin = false
       return
     }
+    // 这是成功登录的
     if (n.length > 0) {
       _self.currentUn = n
       _self.isLogin = true
+      // 给cookie 设置标记
+      _self.$cookies.set('isLogin', true)
     }
   }
 }

@@ -4,17 +4,21 @@
         <span @click="changeArea">
           <el-tag>
             <span v-if="!showAddArea">添加新密码</span>
-            <span v-if="showAddArea">返回密码列表</span>
+            <span v-if="showAddArea" >返回密码列表</span>
           </el-tag>
         </span>
         <span><el-tag>批量删除</el-tag></span>
       </div>
       <div class="content_area">
         <div  v-if="!showAddArea">
-            <el-table :data="tableData" style="width: 100%">
+            <el-table :data="tableData" @cell-mouse-leave="showSecretStr"  @cell-mouse-enter="showRealPw" style="width: 100%">
+              <el-table-column
+                type="index"
+                width="50">
+              </el-table-column>
               <el-table-column prop="appname" label="应用" width="180"></el-table-column>
-              <el-table-column prop="accountname" label="账户名" width="180"></el-table-column>
-              <el-table-column prop="password" label="密码"></el-table-column>
+              <el-table-column prop="accountname"  label="账户名" width="180"></el-table-column>
+              <el-table-column prop="password"   label="密码"></el-table-column>
               <el-table-column prop="desc" label="描述"></el-table-column>
               <el-table-column prop="date" label="创建日期"></el-table-column>
             </el-table>
@@ -29,6 +33,8 @@
 <script>
 import conf from '@/assets/conf.js'
 import AddItem from '@/components/AddItem'
+import md5 from 'js-md5'
+
 export default {
   name: 'Main',
   components: {
@@ -37,12 +43,34 @@ export default {
   data () {
     return {
       tableData: [],
-      showAddArea: false
+      showAddArea: false,
+      pwMap:{}
     }
   },
   methods: {
     changeArea () {
       this.showAddArea = (!this.showAddArea)
+    },
+    showRealPw (row, column, cell, event) {
+      if (column.label !== '密码') {
+        return false
+      }
+      // let val = row.password
+      // console.log(val)
+      // console.log(row, '--', column, '--', cell, '--', event)
+      // row.password = 'djgldkfhbjdklfhdnfjkbhvd'
+      let key = md5(row['appname']+row['password']+row['date'])
+      console.log(row);
+      let pwArray = [row.password,"123"+row.password]
+      this.pwMap[key]=pwArray
+      row.password =this.pwMap[key][1]
+    },
+    showSecretStr (row, column, cell, event) {
+      if (column.label !== '密码') {
+        return false
+      }
+      let key = md5(row['appname']+row['password']+row['date'])
+      row.password =this.pwMap[key][0]
     }
   },
   mounted () {

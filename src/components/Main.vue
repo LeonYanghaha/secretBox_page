@@ -14,8 +14,8 @@
             <el-table :data="tableData" @cell-mouse-leave="showSecretStr"  @cell-mouse-enter="showRealPw" style="width: 100%">
               <el-table-column type="index" width="50">
               </el-table-column>
-              <el-table-column label="##" value="🐟" width="50">
-              </el-table-column>
+              <!--<el-table-column label="##" value="🐟" width="50">-->
+              <!--</el-table-column>-->
               <el-table-column prop="appname" label="应用" width="180">
               </el-table-column>
               <el-table-column prop="accountname" label="账户名" width="180">

@@ -3,9 +3,7 @@ import Router from 'vue-router'
 import Index from '@/components/Index'
 import Regist from '@/components/Regist'
 import About from '@/components/About'
-
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {

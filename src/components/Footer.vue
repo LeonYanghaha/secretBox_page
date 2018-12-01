@@ -1,7 +1,7 @@
 <template>
   <div class="foot_main">
     <hr/><br/>
-    <span>密码管理工具</span><br/>
+    <span>密码管理</span><br/>
     <!--<span><strong>密码的丢失，开发者不担负任何责任！</strong></span><br/>-->
     <span>by:Yangk-</span><br/>
   </div>

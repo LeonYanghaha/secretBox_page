@@ -16,7 +16,7 @@
       </el-input><br/>
     </span><br/>
     <span class="regist_item regist_item_info">
-        <span v-show="isShowInfo">{{info}}</span>
+        <span>{{info}}</span>
     </span><br/>
     <span class="regist_item regist_item_btn">
       <el-button type="primary" @click="submit_data" plain>提交数据</el-button>
@@ -34,19 +34,19 @@ export default {
       un: '',
       pw: '',
       repw: '',
-      info: '',
-      isShowInfo: false
+      info: ''
+      // isShowInfo: true
     }
   },
-  watch: {
-    info (oldVal, newVal) {
-      if (newVal !== '') {
-        this.isShowInfo = false
-      } else {
-        this.isShowInfo = true
-      }
-    }
-  },
+  // watch: {
+  //   info (oldVal, newVal) {
+  //     if (newVal !== '') {
+  //       this.isShowInfo = false
+  //     } else {
+  //       this.isShowInfo = true
+  //     }
+  //   }
+  // },
   methods: {
     submit_data () {
       let url = conf.url + 'user/regist'
@@ -63,13 +63,13 @@ export default {
         return false
       }
 
-      this.$http.post(url, Qs.stringify({un: un, pw: pw, repw: repw})).then(function (res) {
+      _self.$http.post(url, Qs.stringify({un: un, pw: pw, repw: repw})).then(function (res) {
         if (res && res.status === 200) {
           let data = res.data
           if (data && data['code'] && data['code'] === 1) {
             _self.info = '注册成功，去登录吧'
           } else {
-            _self.info = data.info ? data.info : ''
+            _self.info = '当前电脑已经存在一个账户！' // data.info
           }
         } else {
           _self.info = '貌似网络问题'

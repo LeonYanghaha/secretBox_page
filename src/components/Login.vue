@@ -11,7 +11,7 @@
       </el-input><br/>
     </span><br/>
     <span class="login_item login_item_info">
-        <span v-show="isShowInfo">{{info}}</span>
+        <span>{{info}}</span>
     </span><br/>
     <span class="login_item login_item_btn">
       <el-button type="primary" plain @click="submit_data">登录</el-button>
@@ -28,19 +28,19 @@ export default {
     return {
       un: '',
       pw: '',
-      info: '',
-      isShowInfo: false
+      info: '  '
+      // isShowInfo: false
     }
   },
-  watch: {
-    info (oldVal, newVal) {
-      if (newVal !== '') {
-        this.isShowInfo = true
-      } else {
-        this.isShowInfo = false
-      }
-    }
-  },
+  // watch: {
+  //   info (oldVal, newVal) {
+  //     if (newVal !== '') {
+  //       this.isShowInfo = true
+  //     } else {
+  //       this.isShowInfo = false
+  //     }
+  //   }
+  // },
   methods: {
     submit_data () {
       let _self = this
@@ -78,15 +78,15 @@ export default {
     }
   },
   mounted () {
-    let url = conf.url
     let _self = this
-    this.$http.get(url).then(function (res) {
+    let url = conf.url
+    _self.$http.get(url).then(function (res) {
       if (res.status === 200) {
         let data = res.data
         if (data.code && data.code !== 1) {
-          _self.info = data.info ? data.info : ''
+          _self.info = data.info // ? data.info : ''
         } else {
-          _self.info = 'ok'
+          _self.info = data.info
         }
       } else {
         _self.info = '貌似网络除了一些问题'

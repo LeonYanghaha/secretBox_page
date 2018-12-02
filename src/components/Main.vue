@@ -11,11 +11,22 @@
       </div>
       <div class="content_area">
         <div  v-if="!showAddArea">
-            <el-table :data="tableData" @cell-mouse-leave="showSecretStr"  @cell-mouse-enter="showRealPw" style="width: 100%">
-              <el-table-column type="index" width="50">
+            <el-table :data="tableData"
+                      @cell-mouse-leave="showSecretStr"
+                      @cell-mouse-enter="showRealPw"
+                      stripe
+                      style="width: 100%">
+              <el-table-column type="index" width="30">
               </el-table-column>
-              <!--<el-table-column label="##" value="🐟" width="50">-->
-              <!--</el-table-column>-->
+              <el-table-column width="70">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleDelete(scope.$index, scope.row)">
+                    <span class="delete_tag">删除</span>
+                  </el-button>
+                </template>
+              </el-table-column>
               <el-table-column prop="appname" label="应用" width="180">
               </el-table-column>
               <el-table-column prop="accountname" label="账户名" width="180">
@@ -59,6 +70,9 @@ export default {
       this.showAddArea = (!this.showAddArea)
     },
     showRealPw (row, column, cell, event) {
+      // 修改删除按钮的样式
+
+      // 以下是展示真实密码的code
       let _self = this
       if (column.label !== '密码') {
         return false
@@ -85,10 +99,52 @@ export default {
       row.password = this.pwMap[key][0]
     },
     formatTime (row, column) {
-      if(!row.date){
+      if (!row.date) {
         return ''
       }
-      return moment(row.date+'000'-0).format('YYYY-M-D H:mm:ss')
+      return moment(row.date + '000' - 0).format('YYYY-M-D H:mm:ss')
+    },
+    handleDelete (index, row) {
+      var _self = this
+      _self.$confirm('此操作将永久删除,<b>不可恢复！</b> 是否继续?<br/>' + '应用名称:' + row.appname + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + '账户名称:' + row.accountname, '提示', {
+        confirmButtonText: '确认删除',
+        cancelButtonText: '取消',
+        dangerouslyUseHTMLString: true,
+        type: 'warning'
+      }).then(() => {
+        // 删除操作
+        var url = conf.url + 'secret/delete'
+        _self.$http.post(url, Qs.stringify({ ac: row.accountname, an: row.appname, pw: row.password })).then(function (res) {
+          if (!res || res.status !== 200) {
+            _self.$message({
+              type: 'error',
+              message: '删除失败!..网络故障'
+            })
+            return false
+          }
+          let data = res.data
+          if (data.code && data.code === 1) {
+            _self.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          } else {
+            _self.$message({
+              type: 'error',
+              message: '删除失败!' + data.info ? data.info : ''
+            })
+          }
+        })
+      }).catch(() => {
+        _self.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      }).finally(() => {
+        // 不管删除掉 情况怎么样，刷新页面
+        location.reload()
+        _self.$router.push({ path: '/' })
+      })
     }
   },
   mounted () {
@@ -143,5 +199,9 @@ export default {
 }
 .content_area{
   padding-top: 10%;
+}
+.delete_tag:hover{
+  color: red;
+  font-weight:bold;
 }
 </style>

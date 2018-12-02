@@ -3,11 +3,11 @@
       <div class="table_control">
         <span @click="changeArea">
           <el-tag>
-            <span v-if="!showAddArea">添加新密码</span>
-            <span v-if="showAddArea" >返回密码列表</span>
+            <span v-if="!showAddArea"><b><i class="el-icon-circle-plus-outline"></i></b>&nbsp;新增</span>
+            <span v-if="showAddArea" ><i class="el-icon-back"></i>返回列表</span>
           </el-tag>
         </span>
-        <span><el-tag>批量删除</el-tag></span>
+        <!--<span><el-tag><i class="el-icon-delete"></i>批量删除</el-tag></span>-->
       </div>
       <div class="content_area">
         <div  v-if="!showAddArea">
@@ -16,26 +16,41 @@
                       @cell-mouse-enter="showRealPw"
                       stripe
                       style="width: 100%">
-              <el-table-column type="index" width="30">
+              <el-table-column type="index" width="25">
               </el-table-column>
-              <el-table-column width="70">
+              <el-table-column width="55" label="操作" >
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
+                    type="danger"
+                    plain
+                    title="删除"
                     @click="handleDelete(scope.$index, scope.row)">
-                    <span class="delete_tag">删除</span>
+                    <span class="delete_tag"><i class="el-icon-delete"></i></span>
                   </el-button>
                 </template>
               </el-table-column>
-              <el-table-column prop="appname" label="应用" width="180">
+              <el-table-column width="55" >
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="primary"
+                    plain
+                    title="编辑"
+                    @click="updateItem(scope.row)">
+                    <span class="update_tag"><i class="el-icon-edit-outline"></i></span>
+                  </el-button>
+                </template>
               </el-table-column>
-              <el-table-column prop="accountname" label="账户名" width="180">
+              <el-table-column prop="appname" label="应用" width="80">
               </el-table-column>
-              <el-table-column prop="password" label="密码">
+              <el-table-column prop="accountname" label="账户名" width="130">
+              </el-table-column>
+              <el-table-column prop="password" label="密码" width="250">
               </el-table-column>
               <el-table-column prop="desc" label="描述">
               </el-table-column>
-              <el-table-column prop="date" :formatter="formatTime" label="创建日期">
+              <el-table-column prop="date" :formatter="formatTime" width="200" label="创建日期">
               </el-table-column>
             </el-table>
         </div>
@@ -62,16 +77,61 @@ export default {
     return {
       tableData: [],
       showAddArea: false,
-      pwMap: {}
+      pwMap: {},
+      info: {
+        edit_in: '编辑',
+        delete_in: '删除'
+      }
     }
   },
   methods: {
+    updateItem (row) {
+      //  点击修改按钮之后，第一件事情是应该去后台查一下密码的明文
+      let _self = this
+      let key = md5(row['appname'] + row['accountname'] + row['date'])
+      let password = _self.pwMap[key] ? (_self.pwMap[key][0] ? _self.pwMap[key][0] : -1) : -1
+
+      // TODO  这里是嵌套了proimse  ,还有很多的问题
+      // if (password === -1) {
+      //   let url = conf.url + 'secret/showsecret'
+      //   _self.$http.post(url, Qs.stringify({secret: row.password})).then(function (res) {
+      //     if (!res || res.status !== 200) {
+      //       return false
+      //     }
+      //     let data = res.data
+      //     if (data && data['code'] && data['code'] === 1) {
+      //       let pwArray = [row.password, data.data.secret]
+      //       _self.pwMap[key] = pwArray
+      //       password = _self.pwMap[key][0]
+      //     } else {
+      //       console.error('这里是查询密码明文出错的情况')
+      //     }
+      //   })
+      // }
+
+      var an = row['appname']
+      var ac = row['accountname']
+      var desc = row['appname']
+      _self.$confirm('<strong>应用名：<input type="text" value="' + an + '"><br/>' +
+        '账户名：<input type="text" value="' + ac + '"><br/>' +
+        '密&nbsp;&nbsp;&nbsp;码：<input type="text" value="' + password + '"><br/>' +
+        '描&nbsp;&nbsp;&nbsp;述：<input type="text" value="' + desc + '"></strong>', '修改', {
+        dangerouslyUseHTMLString: true
+      })
+    },
+    // showInfo () {
+    //   console.log('show')
+    // },
+    // noneInfo () {
+    //   console.log('none')
+    // },
     changeArea () {
       this.showAddArea = (!this.showAddArea)
     },
     showRealPw (row, column, cell, event) {
       // 修改删除按钮的样式
-
+      // console.error(row,'--',column,'--',cell)
+      // var current_cell_id = column.id
       // 以下是展示真实密码的code
       let _self = this
       if (column.label !== '密码') {
@@ -184,8 +244,8 @@ export default {
 <style scoped>
 .table_main{
   /*border: 2px solid red;*/
-  width: 70%;
-  margin-top: 5%;
+  width: 75%;
+  /*margin-top: 5%;*/
   margin-left: auto;
   margin-right: auto;
 }
@@ -198,10 +258,13 @@ export default {
   margin-left: 5px;
 }
 .content_area{
-  padding-top: 10%;
+  /*border: 2px solid  blue;*/
+  padding-top: 6%;
 }
-.delete_tag:hover{
-  color: red;
-  font-weight:bold;
-}
+/*.delete_tag:hover{*/
+  /*color: red;*/
+  /*font-weight:bold;*/
+/*}.update_tag:hover{*/
+  /*font-weight:bold;*/
+/*}*/
 </style>

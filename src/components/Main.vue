@@ -130,8 +130,9 @@ export default {
       var updateDataUI = function (itemObj) {
         //  更新数据
         tempItem.password = _self.pwMap[key][1]
-        _self.currentItem = itemObj
-        _self.newItem = itemObj
+        // 之所以这么写，是为了实现深拷贝，否则两个item指向同一块内存，用户做了修改，会导致一起变化
+        _self.currentItem = JSON.parse(JSON.stringify(itemObj))
+        _self.newItem = JSON.parse(JSON.stringify(itemObj))
         _self.newItem['repassword'] = itemObj.password
         //  展示UI
         _self.isShowEdit = true

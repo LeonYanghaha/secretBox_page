@@ -43,6 +43,7 @@
 
 <script>
 import conf from '@/assets/conf.js'
+import Qs from 'qs'
 export default {
   name: 'Edit',
   props: ['currentItem', 'newItem'],
@@ -80,7 +81,34 @@ export default {
         _self.info = '没有做任何修改，不能提交'
         return false
       }
+      let url = conf.url + 'secret/edit'
+      let paramsObj = {
+        current_appname: currentItem.appname,
+        current_accountname: currentItem.accountname,
+        current_password: currentItem.password,
+        current_desc: currentItem.desc,
+        current_date: currentItem.date,
 
+        new_appname: newItem.appname,
+        new_accountname: newItem.accountname,
+        new_password: newItem.password,
+        new_repassword: newItem.repassword,
+        new_desc: newItem.desc
+      }
+      _self.$http.post(url, Qs.stringify(paramsObj)).then(function (res) {
+        if (!res || res.status !== 200) {
+          return false
+        }
+        let data = res.data
+        if (data && data['code'] && data['code'] === 1) {
+          _self.info = '修改成功'
+          location.reload()
+          _self.$router.push({ path: '/' })
+        } else {
+          _self.info = '修改失败。' + data.info
+          return false
+        }
+      })
     },
     hiddenEdit () {
       this.$emit('hidden', true)
@@ -91,24 +119,16 @@ export default {
 
 <style scoped>
 .form_main{
-  /*box-shadow:0 0 30px 10px rgba(255,255,255,.7) inset;*/
-  /*box-shadow: 10px 10px 5px #444;*/
   width: 30em;
   margin-left: auto;
   margin-right: auto;
   margin-top: 8.5em;
   padding: 4em 12em;
-  /*padding-left: 12em;*/
-  /*padding-top: 4em;*/
-  /*padding-bottom: 4em;*/
   border-radius: 2em;
-  /*background-color: rgba(200,200,200,0.5);*/
-
 }
 .add_item{
   display: block;
   margin-top: 1em;
-  /*padding-top: 20%;*/
   text-align: center;
 }
 .edit_main{

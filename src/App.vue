@@ -6,7 +6,6 @@
     <Footer></Footer>
   </div>
 </template>
-
 <script>
 import myheader from './components/Head'
 import Footer from './components/Footer'
@@ -41,7 +40,6 @@ export default {
     if (n.length > 0) {
       _self.currentUn = n
       _self.isLogin = true
-      // 给cookie 设置标记
       _self.$cookies.set('isLogin', true)
     }
   }

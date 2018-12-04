@@ -65,7 +65,7 @@
               </el-table>
           </div>
           <div v-if="showAddArea">
-              <AddItem></AddItem>
+              <AddItem v-on:showindex="changeArea"></AddItem>
           </div>
         </div>
       </div>

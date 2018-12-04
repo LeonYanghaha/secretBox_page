@@ -79,7 +79,7 @@ export default {
   },
   mounted () {
     let _self = this
-    let url = conf.url
+    let url = conf.url + '/test'
     _self.$http.get(url).then(function (res) {
       if (res.status === 200) {
         let data = res.data
@@ -97,23 +97,23 @@ export default {
 </script>
 
 <style scoped>
-  .login_main{
-    /*border: 2px solid green;*/
-    width: 20%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 10%;
-  }
-  .login_item{
-  }
-  .login_item_info {
-    width: 99%;
-    display: inline-block;
-    text-align: center;
-  }
-  .login_item_btn{
-    width: 99%;
-    display: inline-block;
-    text-align: center;
-  }
+.login_main{
+  /*border: 2px solid green;*/
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10%;
+}
+.login_item{
+}
+.login_item_info {
+  width: 99%;
+  display: inline-block;
+  text-align: center;
+}
+.login_item_btn{
+  width: 99%;
+  display: inline-block;
+  text-align: center;
+}
 </style>

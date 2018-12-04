@@ -69,8 +69,8 @@ export default {
         _self.info = '完善信息'
         return false
       }
-      console.log(newItem)
-      console.log(currentItem)
+      // console.log(newItem)
+      // console.log(currentItem)
       if (newItem.password !== newItem.repassword) {
         _self.info = '两次输入的密码不一致'
         return false

@@ -16,7 +16,7 @@ export default {
 <style scoped>
 .foot_main{
   width: 80%;
-  margin-top: 20%;
+  margin-top: 10em;
   margin-left: auto;
   margin-right: auto;
   text-align: center;

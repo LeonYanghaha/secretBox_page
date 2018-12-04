@@ -14,20 +14,12 @@
     <div class="not_login_div" v-if="isLogin">
       <span class="user_name">
         <el-dropdown trigger="click">
-          <span class="el-dropdown-link"
-                @click="user">
-            <img class="user_icon" src="@/assets/icon/index_icon.jpeg"/>
+          <span class="el-dropdown-link">
+            <img class="user_icon" @click="user" src="@/assets/icon/index_icon.jpeg"/>&nbsp;&nbsp;
             &nbsp;
             {{ currentUn }}<i class="el-icon-caret-bottom el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <!--<el-dropdown-item class="clearfix">-->
-              <!--评论-->
-              <!--<el-badge class="mark" :value="12" />-->
-            <!--</el-dropdown-item>-->
-            <!--<el-dropdown-item class="clearfix">-->
-              <!--<router-link to="/about">关于</router-link>-->
-            <!--</el-dropdown-item>-->
             <el-dropdown-item class="clearfix">
                <span @click="user">
                  <img class="icon index_icon" src="@/assets/icon/index_icon.jpeg"/>

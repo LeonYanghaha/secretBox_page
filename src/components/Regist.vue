@@ -68,6 +68,9 @@ export default {
           let data = res.data
           if (data && data['code'] && data['code'] === 1) {
             _self.info = '注册成功，去登录吧'
+            // 跳转到登录页面
+            location.reload()
+            _self.$router.push({ path: '/' })
           } else {
             _self.info = '当前电脑已经存在一个账户！' // data.info
           }

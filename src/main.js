@@ -11,7 +11,9 @@ import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+axios.defaults.withCredentials = true // 设置携带cookie
 Vue.use(VueAxios, axios)
+Vue.prototype.$axios = axios
 Vue.use(VueCookies)
 Vue.use(require('vue-wechat-title'))
 

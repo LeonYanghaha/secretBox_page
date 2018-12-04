@@ -2,33 +2,34 @@
   <div class="add_main">
     <span class="add_item">
       <el-input placeholder="应用名" v-model="appname">
-        <template slot="prepend">应用名:</template>
+        <template slot="prepend">应&nbsp;&nbsp;用&nbsp;名:</template>
       </el-input>
-    </span><br/>
+    </span>
     <span class="add_item">
       <el-input placeholder="用户名" v-model="accountname">
-        <template slot="prepend">用户名</template>
+        <template slot="prepend">用&nbsp;&nbsp;户&nbsp;名:</template>
       </el-input>
-    </span><br/>
+    </span>
     <span class="add_item">
       <el-input placeholder="密码" v-model="password">
-        <template slot="prepend">密码:</template>
+        <template slot="prepend">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</template>
       </el-input>
-    </span><br/>
+    </span>
     <span class="add_item">
       <el-input placeholder="确认密码" v-model="repassword">
         <template slot="prepend">确认密码:</template>
       </el-input>
-    </span><br/>
+    </span>
     <span class="add_item">
       <el-input placeholder="其他信息" v-model="description">
         <template slot="prepend">其他信息:</template>
       </el-input>
-    </span><br/>
+    </span>
     <span class="add_item">
         <span>{{info}}</span>
-    </span><br/>
+    </span>
     <span class="add_item">
+      <el-button type="danger" @click="show_index" plain>取消</el-button>
       <el-button type="primary" @click="submit_data" plain>提交数据</el-button>
     </span>
   </div>
@@ -50,6 +51,9 @@ export default {
     }
   },
   methods: {
+    show_index () {
+      this.$emit('showindex', true)
+    },
     submit_data () {
       let _self = this
       _self.info = '正在处理，稍等哈😊'
@@ -93,5 +97,6 @@ export default {
 .add_item{
   display: block;
   margin-top: 20px;
+  text-align: center;
 }
 </style>

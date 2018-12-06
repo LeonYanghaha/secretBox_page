@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="login" v-if="!isLogin">
-      <Login></Login>
+    <div class="login" v-if="!isLogin" >
+      <Login v-on:updatestatus="updateLogin()"></Login>
     </div>
 
     <div class="table" v-if="isLogin">
@@ -27,10 +27,14 @@ export default {
   watch: {
   },
   methods: {
+    updateLogin () {
+      this.isLogin = true
+      console.log(this.isLogin)
+    }
   },
   mounted () {
     let _self = this
-    let isLogin = _self.$cookies.get('isLogin')
+    let isLogin = _self.isLogin // _self.$cookies.get('isLogin')
     if (isLogin) { // 已经登录的情况
       _self.isLogin = true
     } else { // 没有登录的情况

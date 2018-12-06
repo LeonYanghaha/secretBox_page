@@ -64,16 +64,19 @@ export default {
           _self.info = '数据不合法！'
           return false
         }
-        _self.$cookies.set('d', data['data'].d)
-        _self.$cookies.set('n', data['data'].n)
-        _self.$cookies.set('p', data['data'].p)
-        _self.$cookies.set('t', data['data'].t)
+        _self.$cookies.set('d', data['data'].d, { expires: '10m' })
+        _self.$cookies.set('n', data['data'].n, { expires: '10m' })
+        _self.$cookies.set('p', data['data'].p, { expires: '10m' })
+        _self.$cookies.set('t', data['data'].t, { expires: '10m' })
 
         // 给cookie 设置标记
-        _self.$cookies.set('isLogin', true)
+        // _self.$cookies.set('isLogin', true, { expires: '10m' })
+        // 通过组件传值的方式去更新吧。cookie好像有问题
+        _self.$emit('updatestatus', true)
+        console.log('qqqqqqqqqq')
         // 应该先刷新页面，然后跳转，要不然title不能及时更新
-        location.reload()
-        _self.$router.push({ path: '/' })
+        // location.reload()
+        // _self.$router.push({ path: '/' })
       })
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="head-main">
-    <div class="login_div" v-if="!isLogin">
+    <div class="login_div" v-if="isLogin">
       <el-tag>
         <span @click="user">首页</span>
       </el-tag>
@@ -11,7 +11,7 @@
         <span @click="about">关于</span>
       </el-tag>
     </div>
-    <div class="not_login_div" v-if="isLogin">
+    <div class="not_login_div" v-if="!isLogin">
       <span class="user_name">
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
@@ -67,8 +67,9 @@ export default {
       this.$cookies.remove('p')
       this.$cookies.remove('t')
       // 还需要清除cookie的标记
-      this.$cookies.remove('isLogin')
-      location.reload()
+      // this.$cookies.remove('isLogin')
+      this.$emit('isLogin', false)
+      // location.reload()
     },
     about () {
       this.$router.push({ path: '/about' })

@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <div v-wechat-title="$route.meta.title"></div>
-    <myheader :isLogin="isLogin" :currentUn="currentUn"></myheader>
+    <myheader :isLogin="isLogin" :currentUn="currentUn" v-on:isLogin="updateLogin()"></myheader>
     <router-view/>
     <Footer></Footer>
   </div>
 </template>
 <script>
+import conf from '@/assets/conf.js'
 import myheader from './components/Head'
 import Footer from './components/Footer'
 export default {
@@ -18,6 +19,11 @@ export default {
     return {
       isLogin: false,
       currentUn: ''
+    }
+  },
+  methods: {
+    updateLogin () {
+      this.isLogin = false
     }
   },
   mounted () {
@@ -42,6 +48,14 @@ export default {
       _self.isLogin = true
       _self.$cookies.set('isLogin', true)
     }
+  },
+  beforeDestroy () {
+    let url = conf.url + 'closepage'
+    this.$http.get(url).then()
+  },
+  destroyed () {
+    // console.log('14567890')
+    // alert(123)
   }
 }
 </script>

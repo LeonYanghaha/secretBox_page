@@ -64,6 +64,7 @@ export default {
       }
 
       _self.$http.post(url, Qs.stringify({un: un, pw: pw, repw: repw})).then(function (res) {
+        console.error(res.header)
         if (res && res.status === 200) {
           let data = res.data
           if (data && data['code'] && data['code'] === 1) {

@@ -17,6 +17,14 @@ Vue.prototype.$axios = axios
 Vue.use(VueCookies)
 Vue.use(require('vue-wechat-title'))
 
+// Vue['addCookie'] = function (d, t) {
+//   if (!d || !t || d === '' || t === '') {
+//     return false
+//   }
+//   this.$cookies.set('d', d)
+//   this.$cookies.set('t', t)
+// }
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
